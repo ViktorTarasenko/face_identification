@@ -1,5 +1,6 @@
 Запуск сервера: python3 api.py
 Для верификации по лицу необходимо сделать json post запрос с параметрами id - id сотрудника, img - url base64 decoded image
 База данных лежит в директории database, id это первая часть файла до underscore
-Для кодирования изображения можно воспользоваться сайтом https://elmah.io/tools/base64-image-encoder/, брать нужно из поля HTML usage ту часть которая начинается с image
+Для кодирования изображения можно воспользоваться сайтом https://elmah.io/tools/base64-image-encoder/
 Результат верификации сохраняется в папке results в виде картинки, получить результат можно по запросу http://192.168.1.190:5000/result/{result_id}
+Для запуска необходимо установить python библиотеку deepface: pip install deepface

@@ -32,8 +32,6 @@ def verify():
     try:
         verification_image_base64 = req['img']
         verification_image = load_base64_img(verification_image_base64)
-        if not (len(verification_image_base64) > 11 and verification_image_base64[0:11] == "data:image/"):
-            raise VerificationException("you must pass img as base64 encoded string")
         employee_id = req['id']
 
         employee_image_filename, employee_image = find_employee_image(employee_id)
@@ -52,7 +50,7 @@ def verify():
         if len(employee_faces) > 1:
             raise VerificationException("Db error - more than one face on image")
 
-        verify_result = DeepFace.verify(verification_image_base64,
+        verify_result = DeepFace.verify(verification_image,
                                         employee_image_filename,
                                         model_name="VGG-Face",
                                         distance_metric="cosine",
@@ -106,8 +104,7 @@ def save_verification_result_image(identification_id, verification_faces, employ
 
 
 def load_base64_img(uri):
-    encoded_data = uri.split(',')[1]
-    nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
+    nparr = np.fromstring(base64.b64decode(uri), np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     return img
 
